@@ -13,6 +13,7 @@ class SamlProxy < Sinatra::Base
   end
 
   configure do
+    enable :logging
     register Sinatra::ConfigFile
     config_file 'config/*'
 
