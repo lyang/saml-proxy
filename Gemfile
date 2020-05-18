@@ -11,4 +11,9 @@ group :development do
   gem 'rubocop', '~> 0.83.0'
 end
 
+group :test do
+  gem 'rack-test', '~> 1.1'
+  gem 'rspec', '~> 3.9', group: :test
+end
+
 gem 'pry', '~> 0.13.1', group: %i[development test]
