@@ -17,6 +17,16 @@ class SamlProxy < Sinatra::Base
     register Sinatra::ConfigFile
     config_file 'config/*'
 
-    use Rack::Session::Cookie, settings.cookie.deep_symbolize_keys.compact
+    unless test?
+      use Rack::Session::Cookie, settings.cookie.deep_symbolize_keys.compact
+    end
+  end
+
+  get '/auth' do
+    if session[:authed]
+      200
+    else
+      401
+    end
   end
 end
