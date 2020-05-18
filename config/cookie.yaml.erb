@@ -1,0 +1,5 @@
+cookie:
+  key: <%= ENV.fetch('COOKIE_KEY', 'saml-proxy') %>
+  path: <%= ENV.fetch('COOKIE_PATH', '/') %>
+  secret: <%= ENV.fetch('COOKIE_SECRET', SecureRandom.hex(64)) %>
+  expire_after: <%= ENV.has_key?('COOKIE_EXPIRE_AFTER') ? ENV.fetch('COOKIE_EXPIRE_AFTER').to_i : nil %>
