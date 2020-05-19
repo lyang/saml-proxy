@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
+ENV['RACK_ENV'] = 'test'
+
 require 'spec_helper'
 require 'rack/test'
 require_relative '../saml_proxy'
-
-ENV['RACK_ENV'] = 'test'
 
 # Auto set app to described_class
 module SinatraSpecMixin
