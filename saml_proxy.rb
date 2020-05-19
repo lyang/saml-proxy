@@ -13,6 +13,10 @@ class SamlProxy < Sinatra::Base
     register Sinatra::Reloader
   end
 
+  configure :test do
+    OneLogin::RubySaml::Logging.logger.level = Logger::UNKNOWN
+  end
+
   configure do
     enable :logging
     register Sinatra::ConfigFile
