@@ -3,6 +3,7 @@
 source 'https://rubygems.org'
 
 gem 'puma', '~> 4.3'
+gem 'ruby-saml', '~> 1.11'
 gem 'sinatra', '~> 2.0'
 gem 'sinatra-contrib', '~> 2.0'
 
