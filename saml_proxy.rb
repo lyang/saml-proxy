@@ -45,6 +45,19 @@ class SamlProxy < Sinatra::Base
     )
   end
 
+  post '/consume' do
+    saml_response = OneLogin::RubySaml::Response.new(
+      params[:SAMLResponse],
+      settings: saml_settings
+    )
+    if valid?(saml_response)
+      session[:authed] = true
+      redirect session.delete(:redirect)
+    else
+      401
+    end
+  end
+
   private
 
   def saml_settings
@@ -52,5 +65,10 @@ class SamlProxy < Sinatra::Base
       settings.saml.deep_symbolize_keys,
       true
     )
+  end
+
+  def valid?(saml_response)
+    saml_response.is_valid? &&
+      Rack::Utils.secure_compare(session[:csrf], params[:RelayState])
   end
 end

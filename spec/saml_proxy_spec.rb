@@ -39,4 +39,56 @@ RSpec.describe SamlProxy do
       expect(query['RelayState']).to eq(last_request.session[:csrf])
     end
   end
+
+  describe '/consume' do
+    let(:saml_response) { instance_double(OneLogin::RubySaml::Response) }
+
+    before do
+      allow(OneLogin::RubySaml::Response).to(
+        receive(:new).and_return(saml_response)
+      )
+    end
+
+    context 'with invalid response' do
+      it 'returns 401 if invalid saml response' do
+        allow(saml_response).to receive(:is_valid?).and_return(false)
+        params = { SAMLResponse: '', RelayState: 'csrf' }
+        post '/consume', params, { 'rack.session' => { csrf: 'csrf' } }
+        expect(last_response.status).to eq(401)
+      end
+
+      it 'returns 401 if RelayState does not match csrf token' do
+        allow(saml_response).to receive(:is_valid?).and_return(true)
+        params = { SAMLResponse: '', RelayState: 'forged' }
+        post '/consume', params, { 'rack.session' => { csrf: 'csrf' } }
+        expect(last_response.status).to eq(401)
+      end
+    end
+
+    context 'with valid response' do
+      let(:params) { { SAMLResponse: '', RelayState: 'csrf' } }
+      let(:rack_env) do
+        { 'rack.session' => { csrf: 'csrf', redirect: 'http://example.com' } }
+      end
+
+      before do
+        allow(saml_response).to receive(:is_valid?).and_return(true)
+      end
+
+      it 'update session if saml response and csrf are both valid' do
+        post '/consume', params, rack_env
+        expect(last_request.session[:authed]).to eq(true)
+      end
+
+      it 'redirects if saml response and csrf are both valid' do
+        post '/consume', params, rack_env
+        expect(last_response.status).to eq(302)
+      end
+
+      it 'redirects session stored location' do
+        post '/consume', params, rack_env
+        expect(last_response.headers['Location']).to eq('http://example.com')
+      end
+    end
+  end
 end
