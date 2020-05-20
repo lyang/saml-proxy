@@ -34,7 +34,7 @@ class SamlProxy < Sinatra::Base
 
   get '/auth' do
     if session[:authed]
-      200
+      [200, session[:mappings], '']
     else
       401
     end

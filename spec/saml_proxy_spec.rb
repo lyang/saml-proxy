@@ -17,6 +17,14 @@ RSpec.describe SamlProxy do
       get '/auth', {}, { 'rack.session' => { authed: true } }
       expect(last_response.status).to eq(200)
     end
+
+    it 'returns extracted attributes as headers' do
+      rack_env = {
+        'rack.session' => { authed: true, mappings: { 'User' => 'Jane Doe' } }
+      }
+      get '/auth', {}, rack_env
+      expect(last_response.headers).to include('User' => 'Jane Doe')
+    end
   end
 
   describe '/start' do
