@@ -3,6 +3,10 @@
 require_relative 'sinatra_spec_helper'
 
 RSpec.describe SamlProxy do
+  before do
+    described_class.saml_settings = nil
+  end
+
   describe '/auth' do
     it 'returns 401 if not already authenticated' do
       get '/auth'
@@ -66,6 +70,14 @@ RSpec.describe SamlProxy do
       it 'loads idp metadata from local file' do
         described_class.settings.saml[:idp_metadata] = 'spec/idp_metadata.xml'
         allow(parser).to receive(:parse).and_call_original
+        get '/start', { redirect: 'example.com' }, {}
+        expect(parser).to have_received(:parse)
+      end
+
+      it 'only loads idp metadata once' do
+        described_class.settings.saml[:idp_metadata] = 'spec/idp_metadata.xml'
+        allow(parser).to receive(:parse).and_call_original
+        get '/start', { redirect: 'example.com' }, {}
         get '/start', { redirect: 'example.com' }, {}
         expect(parser).to have_received(:parse)
       end

@@ -8,6 +8,10 @@ require_relative 'hash'
 
 # Simple Saml2 SSO proxy like oauth2-proxy
 class SamlProxy < Sinatra::Base
+  class << self
+    attr_accessor :saml_settings
+  end
+
   configure :development, :test do
     require 'pry'
     require 'sinatra/reloader'
@@ -62,7 +66,7 @@ class SamlProxy < Sinatra::Base
   private
 
   def saml_settings
-    @saml_settings ||= load_saml_settings
+    self.class.saml_settings ||= load_saml_settings
   end
 
   def load_saml_settings
