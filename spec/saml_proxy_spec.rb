@@ -62,6 +62,13 @@ RSpec.describe SamlProxy do
         get '/start', { redirect: 'example.com' }, {}
         expect(parser).to have_received(:parse)
       end
+
+      it 'loads idp metadata from local file' do
+        described_class.settings.saml[:idp_metadata] = 'spec/idp_metadata.xml'
+        allow(parser).to receive(:parse).and_call_original
+        get '/start', { redirect: 'example.com' }, {}
+        expect(parser).to have_received(:parse)
+      end
     end
   end
 
