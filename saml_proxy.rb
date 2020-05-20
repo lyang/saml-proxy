@@ -12,6 +12,8 @@ class SamlProxy < Sinatra::Base
     attr_accessor :saml_settings
   end
 
+  HTTP_REDIRECT = 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+
   configure :development, :test do
     require 'pry'
     require 'sinatra/reloader'
@@ -27,9 +29,7 @@ class SamlProxy < Sinatra::Base
     register Sinatra::ConfigFile
     config_file 'config/*'
 
-    unless test?
-      use Rack::Session::Cookie, settings.cookie.deep_symbolize_keys.compact
-    end
+    use Rack::Session::Cookie, settings.cookie.deep_symbolize_keys.compact unless test?
   end
 
   get '/auth' do
@@ -82,7 +82,8 @@ class SamlProxy < Sinatra::Base
     if settings.saml.key?(:idp_metadata)
       OneLogin::RubySaml::IdpMetadataParser.new.parse(
         load_metadata(settings.saml[:idp_metadata]),
-        settings: saml_settings
+        settings: saml_settings,
+        sso_binding: [HTTP_REDIRECT]
       )
     else
       saml_settings

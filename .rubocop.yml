@@ -1,5 +1,8 @@
 require: rubocop-rspec
 
+Layout/LineLength:
+  Max: 100
+
 Metric/BlockLength:
   Exclude:
     - 'spec/**/*_spec.rb'

@@ -89,6 +89,15 @@ RSpec.describe SamlProxy do
         get '/start', { redirect: 'example.com' }, {}
         expect(parser).to have_received(:parse)
       end
+
+      it 'limits SSO binding to HTTP-Redirect' do
+        described_class.settings.saml[:idp_metadata] = 'spec/idp_metadata.xml'
+        allow(parser).to receive(:parse)
+          .with(instance_of(String), hash_including(sso_binding: [described_class::HTTP_REDIRECT]))
+          .and_call_original
+        get '/start', { redirect: 'example.com' }, {}
+        expect(parser).to have_received(:parse)
+      end
     end
   end
 
