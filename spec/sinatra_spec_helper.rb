@@ -4,6 +4,7 @@ ENV['RACK_ENV'] = 'test'
 
 require 'spec_helper'
 require 'rack/test'
+require 'webmock/rspec'
 require_relative '../saml_proxy'
 
 # Auto set app to described_class
@@ -15,3 +16,4 @@ module SinatraSpecMixin
 end
 
 RSpec.configure { |config| config.include SinatraSpecMixin }
+WebMock.disable_net_connect!(allow_localhost: true)
