@@ -2,3 +2,14 @@ saml:
   test:
     sp_entity_id: saml-proxy
     idp_sso_target_url: 'https://example.com/idp/sso'
+
+  development:
+    idp_metadata: https://samltest.id/saml/idp
+    name_identifier_format: urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress
+    sp_entity_id: https://github.com/lyang/saml-proxy
+    assertion_consumer_service_url: http://localhost:9292/consume
+    certificate: "<%= File.read('config/localhost.crt') %>"
+    private_key: "<%= File.read('config/localhost.key') %>"
+    security:
+      authn_requests_signed: true
+      metadata_signed: true

@@ -27,7 +27,7 @@ class SamlProxy < Sinatra::Base
   configure do
     enable :logging
     register Sinatra::ConfigFile
-    config_file 'config/*'
+    config_file 'config/*.erb'
 
     use Rack::Session::Cookie, settings.cookie.deep_symbolize_keys.compact unless test?
   end
