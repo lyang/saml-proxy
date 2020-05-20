@@ -3,3 +3,8 @@ mappings:
     username: Saml-User
   development:
     urn:oasis:names:tc:SAML:attribute:subject-id: Saml-Email
+  production:
+  <% ENV.each do |key, value| %>
+    <% next unless key.start_with?('SAML_MAPPINGS_') %>
+    <%= key.delete_prefix('SAML_MAPPINGS_').downcase %>: "<%= ENV[key] %>"
+  <% end %>
