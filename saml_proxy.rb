@@ -56,7 +56,7 @@ class SamlProxy < Sinatra::Base
       settings: saml_settings
     )
     if valid?(saml_response)
-      session[:authed] = true
+      update_session(saml_response)
       redirect session.delete(:redirect)
     else
       401
@@ -96,5 +96,13 @@ class SamlProxy < Sinatra::Base
   def valid?(saml_response)
     saml_response.is_valid? &&
       Rack::Utils.secure_compare(session[:csrf], params[:RelayState])
+  end
+
+  def update_session(saml_response)
+    session[:authed] = true
+    session[:mappings] = {}
+    settings.mappings.each do |attr, header|
+      session[:mappings][header] = saml_response.attributes[attr]
+    end
   end
 end

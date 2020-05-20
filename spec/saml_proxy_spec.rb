@@ -117,11 +117,19 @@ RSpec.describe SamlProxy do
 
       before do
         allow(saml_response).to receive(:is_valid?).and_return(true)
+        allow(saml_response).to receive(:attributes)
+          .and_return('username' => 'Jane Doe', 'email' => 'jane@example.com')
       end
 
-      it 'update session if saml response and csrf are both valid' do
+      it 'sets authed if saml response and csrf are both valid' do
         post '/consume', params, rack_env
         expect(last_request.session[:authed]).to eq(true)
+      end
+
+      it 'extracts attributes using mappings' do
+        post '/consume', params, rack_env
+        mappings = last_request.session[:mappings]
+        expect(mappings).to eq('Saml-User' => 'Jane Doe')
       end
 
       it 'redirects if saml response and csrf are both valid' do
