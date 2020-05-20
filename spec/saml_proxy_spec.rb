@@ -16,27 +16,52 @@ RSpec.describe SamlProxy do
   end
 
   describe '/start' do
-    it 'sets csrf token and stores redirect target' do
-      get '/start', { redirect: 'example.com' }, {}
-      expect(last_request.session[:csrf]).not_to eq(nil)
+    context 'with local settings' do
+      it 'sets csrf token and stores redirect target' do
+        get '/start', { redirect: 'example.com' }, {}
+        expect(last_request.session[:csrf]).not_to eq(nil)
+      end
+
+      it 'stores redirect target' do
+        get '/start', { redirect: 'example.com' }, {}
+        expect(last_request.session[:redirect]).to eq('example.com')
+      end
+
+      it 'redirects to idp_sso_target_url' do
+        get '/start', { redirect: 'example.com' }, {}
+        uri = URI.parse(last_response.headers['Location'])
+        expect(uri.host).to eq('example.com')
+      end
+
+      it 'sets RelayState' do
+        get '/start', { redirect: 'example.com' }, {}
+        uri = URI.parse(last_response.headers['Location'])
+        query = Rack::Utils.parse_query(uri.query)
+        expect(query['RelayState']).to eq(last_request.session[:csrf])
+      end
     end
 
-    it 'stores redirect target' do
-      get '/start', { redirect: 'example.com' }, {}
-      expect(last_request.session[:redirect]).to eq('example.com')
-    end
+    context 'with idp metadata' do
+      let(:parser) { OneLogin::RubySaml::IdpMetadataParser.new }
 
-    it 'redirects to idp_sso_target_url' do
-      get '/start', { redirect: 'example.com' }, {}
-      uri = URI.parse(last_response.headers['Location'])
-      expect(uri.host).to eq('example.com')
-    end
+      before do
+        allow(OneLogin::RubySaml::IdpMetadataParser).to(
+          receive(:new).and_return(parser)
+        )
+      end
 
-    it 'sets RelayState' do
-      get '/start', { redirect: 'example.com' }, {}
-      uri = URI.parse(last_response.headers['Location'])
-      query = Rack::Utils.parse_query(uri.query)
-      expect(query['RelayState']).to eq(last_request.session[:csrf])
+      after do
+        described_class.settings.saml.delete(:idp_metadata)
+      end
+
+      it 'loads idp metadata from remote' do
+        described_class.settings.saml[:idp_metadata] = 'https://example.com/idp/metadata'
+        stub_request(:get, 'https://example.com/idp/metadata')
+          .to_return(status: 200, body: File.read('spec/idp_metadata.xml'))
+        allow(parser).to receive(:parse).and_call_original
+        get '/start', { redirect: 'example.com' }, {}
+        expect(parser).to have_received(:parse)
+      end
     end
   end
 

@@ -3,3 +3,6 @@ require: rubocop-rspec
 Metric/BlockLength:
   Exclude:
     - 'spec/**/*_spec.rb'
+
+RSpec/ExampleLength:
+  Max: 6

@@ -3,6 +3,7 @@
 require 'sinatra'
 require 'sinatra/config_file'
 require 'onelogin/ruby-saml'
+require 'open-uri'
 require_relative 'hash'
 
 # Simple Saml2 SSO proxy like oauth2-proxy
@@ -61,10 +62,31 @@ class SamlProxy < Sinatra::Base
   private
 
   def saml_settings
-    OneLogin::RubySaml::Settings.new(
-      settings.saml.deep_symbolize_keys,
-      true
+    @saml_settings ||= load_saml_settings
+  end
+
+  def load_saml_settings
+    apply_metadata(
+      OneLogin::RubySaml::Settings.new(
+        settings.saml.deep_symbolize_keys,
+        true
+      )
     )
+  end
+
+  def apply_metadata(saml_settings)
+    if settings.saml.key?(:idp_metadata)
+      OneLogin::RubySaml::IdpMetadataParser.new.parse(
+        load_metadata(settings.saml[:idp_metadata]),
+        settings: saml_settings
+      )
+    else
+      saml_settings
+    end
+  end
+
+  def load_metadata(uri)
+    URI.open(uri).read
   end
 
   def valid?(saml_response)
