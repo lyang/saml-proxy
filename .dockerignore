@@ -1,0 +1,11 @@
+.dockerignore
+.git
+.gitignore
+.overcommit.yml
+.rspec
+.rubocop.yml
+.ruby-version
+.travis.yml
+Dockerfile
+README.md
+spec
