@@ -4,15 +4,15 @@ require 'sinatra'
 require 'sinatra/config_file'
 require 'onelogin/ruby-saml'
 require 'open-uri'
-require_relative 'hash'
+require_relative 'helpers/all'
 
 # Simple Saml2 SSO proxy like oauth2-proxy
 class SamlProxy < Sinatra::Base
+  helpers SamlHelper
+
   class << self
     attr_accessor :saml_settings
   end
-
-  HTTP_REDIRECT = 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
 
   configure :development, :test do
     require 'pry'
@@ -68,32 +68,6 @@ class SamlProxy < Sinatra::Base
   def saml_settings
     self.class.saml_settings ||= load_saml_settings
   end
-
-  def load_saml_settings
-    apply_metadata(
-      OneLogin::RubySaml::Settings.new(
-        settings.saml.deep_symbolize_keys,
-        true
-      )
-    )
-  end
-
-  def apply_metadata(saml_settings)
-    if settings.saml.key?(:idp_metadata)
-      OneLogin::RubySaml::IdpMetadataParser.new.parse(
-        load_metadata(settings.saml[:idp_metadata]),
-        settings: saml_settings,
-        sso_binding: [HTTP_REDIRECT]
-      )
-    else
-      saml_settings
-    end
-  end
-
-  def load_metadata(uri)
-    URI.open(uri).read
-  end
-
   def valid?(saml_response)
     saml_response.is_valid? &&
       Rack::Utils.secure_compare(session[:csrf], params[:RelayState])

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../hash'
+require_relative '../../helpers/hash'
 
 RSpec.describe Hash do
   describe '#deep_symbolize_keys' do
