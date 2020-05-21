@@ -66,13 +66,32 @@ RSpec.describe SamlProxy do
         described_class.settings.saml.delete(:idp_metadata)
       end
 
-      it 'loads idp metadata from remote' do
-        described_class.settings.saml[:idp_metadata] = 'https://example.com/idp/metadata'
-        stub_request(:get, 'https://example.com/idp/metadata')
-          .to_return(status: 200, body: File.read('spec/idp_metadata.xml'))
-        allow(parser).to receive(:parse).and_call_original
-        get '/start', { redirect: 'example.com' }, {}
-        expect(parser).to have_received(:parse)
+      context 'with remote metadata' do
+        before do
+          described_class.settings.saml[:idp_metadata] = 'https://example.com/idp/metadata'
+          stub_request(:get, 'https://example.com/idp/metadata')
+            .to_return(status: 200, body: File.read('spec/idp_metadata.xml'))
+        end
+
+        after do
+          described_class.settings.proxy.clear
+        end
+
+        it 'loads idp metadata from remote' do
+          allow(parser).to receive(:parse).and_call_original
+          get '/start', { redirect: 'example.com' }, {}
+          expect(parser).to have_received(:parse)
+        end
+
+        it 'uses proxy if configured' do
+          described_class.settings.proxy[:host] = 'http://example.com'
+          allow(URI).to receive(:open).and_call_original
+          get '/start', { redirect: 'example.com' }, {}
+          expect(URI).to have_received(:open).with(
+            'https://example.com/idp/metadata',
+            proxy: URI.parse('http://example.com')
+          )
+        end
       end
 
       it 'loads idp metadata from local file' do

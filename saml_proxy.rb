@@ -9,6 +9,7 @@ require_relative 'helpers/all'
 # Simple Saml2 SSO proxy like oauth2-proxy
 class SamlProxy < Sinatra::Base
   helpers SamlHelper
+  helpers ProxyHelper
 
   class << self
     attr_accessor :saml_settings
@@ -68,6 +69,7 @@ class SamlProxy < Sinatra::Base
   def saml_settings
     self.class.saml_settings ||= load_saml_settings
   end
+
   def valid?(saml_response)
     saml_response.is_valid? &&
       Rack::Utils.secure_compare(session[:csrf], params[:RelayState])
