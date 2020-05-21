@@ -12,7 +12,4 @@ Metrics/ClassLength:
     - 'spec/**/*_spec.rb'
 
 RSpec/ExampleLength:
-  Max: 8
-
-RSpec/NestedGroups:
-  Max: 4
+  Max: 6
