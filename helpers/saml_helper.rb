@@ -5,7 +5,7 @@ module SamlHelper
   HTTP_REDIRECT = 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
 
   def saml_config
-    settings.saml
+    settings.saml.deep_symbolize_keys
   end
 
   def load_saml_settings
