@@ -19,7 +19,7 @@ module ProxyHelper
   end
 
   def authenticated_proxy
-    [parse_proxy, proxy_config[:user], proxy_config[:pass]]
+    [parse_proxy, proxy_config[:user], proxy_config[:pass].to_s]
   end
 
   def parse_proxy

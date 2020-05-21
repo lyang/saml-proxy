@@ -92,6 +92,17 @@ RSpec.describe SamlProxy do
             proxy: URI.parse('http://example.com')
           )
         end
+
+        it 'uses authenticated proxy if configured' do
+          described_class.settings.proxy[:host] = 'http://example.com'
+          described_class.settings.proxy[:user] = 'user'
+          allow(URI).to receive(:open).and_call_original
+          get '/start', { redirect: 'example.com' }, {}
+          expect(URI).to have_received(:open).with(
+            'https://example.com/idp/metadata',
+            proxy_http_basic_authentication: [URI.parse('http://example.com'), 'user', '']
+          )
+        end
       end
 
       it 'loads idp metadata from local file' do
