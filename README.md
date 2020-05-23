@@ -1,4 +1,4 @@
-# saml-proxy ![build](https://travis-ci.com/lyang/saml-proxy.svg?branch=master)
+# saml-proxy ![build](https://travis-ci.com/lyang/saml-proxy.svg?branch=master) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 A simple saml proxy for SSO integration
 
 ## What is SAML
