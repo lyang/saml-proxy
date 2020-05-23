@@ -46,5 +46,52 @@ Sequence Diagram:
 ## I want to see it in action
 Take a look at [saml-proxy-example](https://github.com/lyang/saml-proxy-example)
 
-## How do I configure it for my setup
-TODO
+## How do I configure it for my production setup
+
+### Via environment variables
+
+#### Server
+| Name | Default | Comment |
+|------|---------|---------|
+| `RACK_ENV` | `development` | |
+| `PORT` | `9292` | |
+| `PUMA_MAX_THREADS` | `5` | |
+
+#### SAML
+| Name | Required | Comment |
+|------|----------|---------|
+| `SAML_IDP_METADATA` | `True` | Path to local file or remote url |
+| `SAML_SP_ENTITY_ID` | `True` | Your `SP_ENTITY_ID` |
+| `SAML_ASSERTION_CONSUMER_SERVICE_URL` | `True` | |
+| `SAML_CERTIFICATE` | `False` | Path to your encryption/signing cert |
+| `SAML_PRIVATE_KEY` | `False` | Path to your encryption/signing key |
+| `SAML_AUTHN_REQUESTS_SIGNED` | `False` | Likely required by your production IdP |
+| `SAML_METADATA_SIGNED` | `False` | Likely required by your production IdP |
+
+#### Mappings
+| `Name` | Required | Comment |
+|------|----------|---------|
+| `SAML_MAPPINGS_*` | `False` | HTTP HEADER |
+
+The `*` is the attribute name returned by your SSO. The value is the HTTP header you want returned to `nginx`'s `auth_request`
+
+#### PROXY
+| `Name` | Required | Comment |
+|------|----------|---------|
+| `PROXY_HOST` | `False` | |
+| `PROXY_PORT` | `False` | |
+| `PROXY_USER` | `False` | |
+| `PROXY_PASSWORD` | `False` | |
+
+The only time it makes outbound http call is when it tries to load idp metadata from a remote URL
+
+#### Cookie
+| `Name` | Default | Comment |
+|------|---------|---------|
+| `COOKIE_KEY` | `saml-proxy` | |
+| `COOKIE_PATH` | `/` | |
+| `COOKIE_SECRET` | `SecureRandom.hex(64)` | **SET IT FOR PRODUCTION** |
+| `COOKIE_EXPIRE_AFTER` | `nil` | Integer in seconds. Default to session only |
+
+#### Via config file override
+You can also put your override configs in `/app/config/`
