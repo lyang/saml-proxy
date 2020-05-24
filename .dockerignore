@@ -8,4 +8,5 @@
 .travis.yml
 Dockerfile
 README.md
+deploy.sh
 spec
