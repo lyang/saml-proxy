@@ -2,5 +2,13 @@ language: ruby
 before_install:
   - gem install bundler
 cache: bundler
-script:
-  - bundle exec rspec
+jobs:
+  include:
+    - stage: test
+      script: bundle exec rspec
+    - stage: deploy
+      script:
+        - echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+        - ./deploy.sh $DOCKERHUB_REPO $TRAVIS_COMMIT
+        - echo $GITHUB_PASSWORD | docker login docker.pkg.github.com -u $GITHUB_USERNAME --password-stdin
+        - ./deploy.sh $GITHUB_REPO $TRAVIS_COMMIT
