@@ -9,6 +9,6 @@ jobs:
     - stage: deploy
       script:
         - echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
-        - ./deploy.sh $DOCKERHUB_REPO $TRAVIS_COMMIT
+        - ./deploy.sh $DOCKERHUB_REPO $TRAVIS_COMMIT https://github.com/$TRAVIS_REPO_SLUG
         - echo $GITHUB_PASSWORD | docker login docker.pkg.github.com -u $GITHUB_USERNAME --password-stdin
-        - ./deploy.sh $GITHUB_REPO $TRAVIS_COMMIT
+        - ./deploy.sh $GITHUB_REPO $TRAVIS_COMMIT https://github.com/$TRAVIS_REPO_SLUG
