@@ -1,4 +1,4 @@
-# saml-proxy ![build](https://travis-ci.com/lyang/saml-proxy.svg?branch=master) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+# saml-proxy ![build](https://travis-ci.com/lyang/saml-proxy.svg?branch=master) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) [![Maintainability](https://api.codeclimate.com/v1/badges/58cdb58ef538f551da7a/maintainability)](https://codeclimate.com/github/lyang/saml-proxy/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/58cdb58ef538f551da7a/test_coverage)](https://codeclimate.com/github/lyang/saml-proxy/test_coverage)
 A simple saml proxy for SSO integration
 
 ## What is SAML
