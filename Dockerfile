@@ -8,7 +8,7 @@ RUN apk update && apk upgrade && \
     apk add build-base && \
     rm -rf /var/cache/apk/*
 COPY Gemfile* ./
-RUN bundle install
+RUN bundle install --without=development test
 
 FROM $BASE_IMAGE AS final
 ARG APP_ROOT
@@ -24,5 +24,6 @@ LABEL org.opencontainers.image.revision="$REVISION"
 WORKDIR $APP_ROOT
 COPY --from=build-env $BUNDLE_DIR $BUNDLE_DIR
 COPY . .
+ENV RACK_ENV=production
 ENV PORT=9292
 CMD bundle exec puma
