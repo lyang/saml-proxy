@@ -160,4 +160,27 @@ RSpec.describe SamlProxy do
       end
     end
   end
+
+  describe '/health-check' do
+    context 'with valid saml settings' do
+      it 'returns 200' do
+        get '/health-check'
+        expect(last_response.status).to eq(200)
+      end
+    end
+
+    context 'with invalid saml settings' do
+      around do |example|
+        idp_sso_target_url = described_class.settings.saml.delete(:idp_sso_target_url)
+        example.run
+        described_class.settings.saml[:idp_sso_target_url] = idp_sso_target_url
+      end
+
+      it 'throws exception' do
+        expect do
+          get '/health-check'
+        end.to raise_error(RuntimeError)
+      end
+    end
+  end
 end

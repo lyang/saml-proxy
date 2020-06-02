@@ -64,6 +64,11 @@ class SamlProxy < Sinatra::Base
     end
   end
 
+  get '/health-check' do
+    OneLogin::RubySaml::Authrequest.new.create(saml_settings)
+    200
+  end
+
   private
 
   def saml_settings
