@@ -1,4 +1,6 @@
 language: ruby
+services:
+  - docker
 before_install:
   - gem install bundler
 cache: bundler
@@ -17,12 +19,8 @@ jobs:
       script:
         - echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
         - ./deploy.sh $DOCKERHUB_REPO $TRAVIS_COMMIT https://github.com/$TRAVIS_REPO_SLUG
-        - echo $GITHUB_PASSWORD | docker login docker.pkg.github.com -u $GITHUB_USERNAME --password-stdin
-        - ./deploy.sh $GITHUB_REPO $TRAVIS_COMMIT https://github.com/$TRAVIS_REPO_SLUG
     - stage: tag by version
       if: branch = master
       script:
         - echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
         - ./deploy.sh $DOCKERHUB_REPO 1.0 https://github.com/$TRAVIS_REPO_SLUG
-        - echo $GITHUB_PASSWORD | docker login docker.pkg.github.com -u $GITHUB_USERNAME --password-stdin
-        - ./deploy.sh $GITHUB_REPO 1.0 https://github.com/$TRAVIS_REPO_SLUG
