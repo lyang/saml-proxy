@@ -179,7 +179,7 @@ RSpec.describe SamlProxy do
       it 'throws exception' do
         expect do
           get '/health-check'
-        end.to raise_error(RuntimeError)
+        end.to raise_error(OneLogin::RubySaml::SettingError)
       end
     end
   end
