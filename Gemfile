@@ -18,7 +18,7 @@ group :test do
   gem 'rspec', '~> 3.11', group: :test
   gem 'simplecov', '~> 0.21.2'
   gem 'simplecov-cobertura'
-  gem 'webmock', '~> 3.17'
+  gem 'webmock', '~> 3.18'
 end
 
 gem 'pry', '~> 0.14.1', group: %i[development test]
