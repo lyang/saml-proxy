@@ -10,7 +10,7 @@ gem 'sinatra-contrib', '~> 2.2'
 group :development do
   gem 'overcommit', '~> 0.59.1'
   gem 'rubocop', '~> 1.36.0'
-  gem 'rubocop-rspec', '~> 2.12'
+  gem 'rubocop-rspec', '~> 2.13'
 end
 
 group :test do
