@@ -8,3 +8,11 @@ mappings:
     <% next unless key.start_with?('SAML_MAPPINGS_') %>
     <%= key.delete_prefix('SAML_MAPPINGS_').downcase %>: "<%= ENV[key] %>"
   <% end %>
+
+groups:
+  attribute: '<%= ENV['SAML_GROUP_ATTRIBUTE'] %>'
+  mappings:
+  <% ENV.each do |key, value| %>
+    <% next unless key.start_with?('SAML_GROUP_MAPPINGS_') %>
+    "<%= ENV[key] %>": <%= key.delete_prefix('SAML_GROUP_MAPPINGS_').downcase %>
+  <% end %>
