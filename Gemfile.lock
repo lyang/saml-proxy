@@ -76,7 +76,7 @@ GEM
       nokogiri (>= 1.10.5)
       rexml
     ruby2_keywords (0.0.5)
-    simplecov (0.21.2)
+    simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
       simplecov_json_formatter (~> 0.1)
@@ -115,7 +115,7 @@ DEPENDENCIES
   rubocop (~> 1.41.1)
   rubocop-rspec (~> 2.16)
   ruby-saml (~> 1.14)
-  simplecov (~> 0.21.2)
+  simplecov (~> 0.22.0)
   simplecov-cobertura
   sinatra (~> 3.0)
   sinatra-contrib (~> 3.0)
