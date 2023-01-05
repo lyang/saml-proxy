@@ -14,7 +14,7 @@ GEM
     iniparse (1.5.0)
     json (2.6.3)
     method_source (1.0.0)
-    mini_portile2 (2.8.0)
+    mini_portile2 (2.8.1)
     multi_json (1.15.0)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
@@ -35,7 +35,7 @@ GEM
     public_suffix (4.0.7)
     puma (6.0.2)
       nio4r (~> 2.0)
-    racc (1.6.1)
+    racc (1.6.2)
     rack (2.2.4)
     rack-protection (3.0.5)
       rack
@@ -72,8 +72,8 @@ GEM
     rubocop-rspec (2.16.0)
       rubocop (~> 1.33)
     ruby-progressbar (1.11.0)
-    ruby-saml (1.14.0)
-      nokogiri (>= 1.10.5)
+    ruby-saml (1.15.0)
+      nokogiri (>= 1.13.10)
       rexml
     ruby2_keywords (0.0.5)
     simplecov (0.22.0)
@@ -114,7 +114,7 @@ DEPENDENCIES
   rspec (~> 3.12)
   rubocop (~> 1.42.0)
   rubocop-rspec (~> 2.16)
-  ruby-saml (~> 1.14)
+  ruby-saml (~> 1.15)
   simplecov (~> 0.22.0)
   simplecov-cobertura
   sinatra (~> 3.0)
