@@ -6,7 +6,7 @@ mappings:
   production:
   <% ENV.each do |key, value| %>
     <% next unless key.start_with?('SAML_MAPPINGS_') %>
-    <%= key.delete_prefix('SAML_MAPPINGS_').downcase %>: "<%= ENV[key] %>"
+    <%= key.delete_prefix('SAML_MAPPINGS_').downcase %>: "<%= value %>"
   <% end %>
 
 groups:
@@ -14,5 +14,5 @@ groups:
   mappings:
   <% ENV.each do |key, value| %>
     <% next unless key.start_with?('SAML_GROUP_MAPPINGS_') %>
-    "<%= ENV[key] %>": <%= key.delete_prefix('SAML_GROUP_MAPPINGS_').downcase %>
+    <%= key.delete_prefix('SAML_GROUP_MAPPINGS_') %>: "<%= value %>"
   <% end %>
