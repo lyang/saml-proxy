@@ -4,8 +4,8 @@ source 'https://rubygems.org'
 
 gem 'puma', '~> 6.3'
 gem 'ruby-saml', '~> 1.15'
-gem 'sinatra', '~> 3.0'
-gem 'sinatra-contrib', '~> 3.0'
+gem 'sinatra', '~> 3.1'
+gem 'sinatra-contrib', '~> 3.1'
 
 group :development do
   gem 'overcommit', '~> 0.60.0'
