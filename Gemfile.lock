@@ -78,7 +78,7 @@ GEM
       rubocop (~> 1.41)
     rubocop-factory_bot (2.23.1)
       rubocop (~> 1.33)
-    rubocop-rspec (2.23.2)
+    rubocop-rspec (2.24.0)
       rubocop (~> 1.33)
       rubocop-capybara (~> 2.17)
       rubocop-factory_bot (~> 2.22)
@@ -124,7 +124,7 @@ DEPENDENCIES
   rack-test (~> 2.1)
   rspec (~> 3.12)
   rubocop (~> 1.56.3)
-  rubocop-rspec (~> 2.23)
+  rubocop-rspec (~> 2.24)
   ruby-saml (~> 1.15)
   simplecov (~> 0.22.0)
   simplecov-cobertura
