@@ -41,7 +41,7 @@ server{
 }
 ```
 Sequence Diagram:
-![sequence-diagram](https://puml-demo.herokuapp.com/raw/https%3A%2F%2Fraw.githubusercontent.com%2Flyang%2Fsaml-proxy-example%2Fmaster%2Fsequence-diagram.puml)
+![sequence-diagram](https://demo.puml.net/raw/https%3A%2F%2Fraw.githubusercontent.com%2Flyang%2Fsaml-proxy-example%2Fmaster%2Fsequence-diagram.puml)
 
 ## I want to see it in action
 Take a look at [saml-proxy-example](https://github.com/lyang/saml-proxy-example)
