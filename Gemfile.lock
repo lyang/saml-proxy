@@ -36,7 +36,7 @@ GEM
       coderay (~> 1.1)
       method_source (~> 1.0)
     public_suffix (5.0.3)
-    puma (6.3.1)
+    puma (6.4.0)
       nio4r (~> 2.0)
     racc (1.7.1)
     rack (2.2.8)
@@ -120,7 +120,7 @@ PLATFORMS
 DEPENDENCIES
   overcommit (~> 0.60.0)
   pry (~> 0.14.2)
-  puma (~> 6.3)
+  puma (~> 6.4)
   rack-test (~> 2.1)
   rspec (~> 3.12)
   rubocop (~> 1.56.3)
