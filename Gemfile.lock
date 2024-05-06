@@ -26,7 +26,7 @@ GEM
     nokogiri (1.16.4)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
-    overcommit (0.62.0)
+    overcommit (0.63.0)
       childprocess (>= 0.6.3, < 6)
       iniparse (~> 1.4)
       rexml (~> 3.2)
@@ -123,7 +123,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  overcommit (~> 0.62.0)
+  overcommit (~> 0.63.0)
   pry (~> 0.14.2)
   puma (~> 6.4)
   rack-test (~> 2.1)
