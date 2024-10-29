@@ -1,0 +1,26 @@
+---
+type: default
+team: platauto
+group: platform
+service: saml-proxy
+
+# Validate the formatting of the pipeline.yaml file.
+validate_config: true
+
+environment_image:
+  file: ".acquia/Dockerfile.ci"
+  context: "."
+
+build:
+  service_image:
+    - name: devops-saml-proxy
+      file: "Dockerfile"
+      context: "."
+
+# This step performs container image security scan in Jfrog Xray via Artifactory
+# Build will fail whenever a vulnerability is found unless set to true
+security_scan:
+  scanner: orca
+  ignore_failures: false
+
+    
