@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=ruby:2.7-alpine
+ARG BASE_IMAGE=ruby:3.3-alpine
 ARG APP_ROOT=/app
 
 FROM $BASE_IMAGE AS build-env
