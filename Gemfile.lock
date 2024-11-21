@@ -131,7 +131,7 @@ DEPENDENCIES
   simplecov (~> 0.22.0)
   simplecov-cobertura
   sinatra (~> 4.1)
-  sinatra-contrib (~> 4.0)
+  sinatra-contrib (~> 4.1)
   webmock (~> 3.24)
 
 BUNDLED WITH
