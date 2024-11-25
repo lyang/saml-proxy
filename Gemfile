@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-gem 'puma', '~> 6.4'
+gem 'puma', '~> 6.5'
 gem 'ruby-saml', '~> 1.17'
 gem 'sinatra', '~> 4.1'
 gem 'sinatra-contrib', '~> 4.1'
