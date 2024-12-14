@@ -14,6 +14,7 @@ group :development do
 end
 
 group :test do
+  gem "rspec_junit_formatter", require: false
   gem 'rack-test', '~> 2.1'
   gem 'rspec', '~> 3.13', group: :test
   gem 'simplecov', '~> 0.22.0'
