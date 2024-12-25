@@ -36,7 +36,7 @@ GEM
     parser (3.3.6.0)
       ast (~> 2.4.1)
       racc
-    pry (0.15.0)
+    pry (0.15.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
     public_suffix (6.0.1)
@@ -125,7 +125,7 @@ PLATFORMS
 
 DEPENDENCIES
   overcommit (~> 0.64.1)
-  pry (~> 0.15.0)
+  pry (~> 0.15.2)
   puma (~> 6.5)
   rack-test (~> 2.1)
   rspec (~> 3.13)
