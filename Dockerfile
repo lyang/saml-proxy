@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=ruby:2.7-alpine
+ARG BASE_IMAGE=ruby:3.4-alpine
 ARG APP_ROOT=/app
 
 FROM $BASE_IMAGE AS build-env
@@ -26,4 +26,4 @@ COPY --from=build-env $BUNDLE_DIR $BUNDLE_DIR
 COPY . .
 ENV RACK_ENV=production
 ENV PORT=9292
-CMD bundle exec puma
+CMD ["bundle", "exec", "puma"]
