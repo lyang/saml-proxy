@@ -3,6 +3,9 @@
 require_relative 'sinatra_spec_helper'
 
 RSpec.describe SamlProxy do
+  let(:session_key) { 'rack.session' }
+  let(:user) { 'Jane Doe' }
+
   before do
     described_class.saml_settings = nil
   end
@@ -14,16 +17,16 @@ RSpec.describe SamlProxy do
     end
 
     it 'returns 200 if already authenticated' do
-      get '/auth', {}, { 'rack.session' => { authed: true } }
+      get '/auth', {}, { session_key => { authed: true } }
       expect(last_response.status).to eq(200)
     end
 
     it 'returns extracted attributes as headers' do
       rack_env = {
-        'rack.session' => { authed: true, mappings: { 'User' => 'Jane Doe' } }
+        session_key => { authed: true, mappings: { 'User' => user } }
       }
       get '/auth', {}, rack_env
-      expect(last_response.headers).to include('User' => 'Jane Doe')
+      expect(last_response.headers).to include('User' => user)
     end
   end
 
@@ -31,7 +34,7 @@ RSpec.describe SamlProxy do
     context 'with local settings' do
       it 'sets csrf token and stores redirect target' do
         get '/start', { redirect: 'example.com' }, {}
-        expect(last_request.session[:csrf]).not_to eq(nil)
+        expect(last_request.session[:csrf]).not_to be_nil
       end
 
       it 'stores redirect target' do
@@ -114,14 +117,14 @@ RSpec.describe SamlProxy do
       it 'returns 401 if invalid saml response' do
         allow(saml_response).to receive(:is_valid?).and_return(false)
         params = { SAMLResponse: '', RelayState: 'csrf' }
-        post '/consume', params, { 'rack.session' => { csrf: 'csrf' } }
+        post '/consume', params, { session_key => { csrf: 'csrf' } }
         expect(last_response.status).to eq(401)
       end
 
       it 'returns 401 if RelayState does not match csrf token' do
         allow(saml_response).to receive(:is_valid?).and_return(true)
         params = { SAMLResponse: '', RelayState: 'forged' }
-        post '/consume', params, { 'rack.session' => { csrf: 'csrf' } }
+        post '/consume', params, { session_key => { csrf: 'csrf' } }
         expect(last_response.status).to eq(401)
       end
     end
@@ -133,20 +136,24 @@ RSpec.describe SamlProxy do
       end
 
       before do
-        allow(saml_response).to receive(:is_valid?).and_return(true)
-        allow(saml_response).to receive(:attributes)
-          .and_return('username' => 'Jane Doe', 'email' => 'jane@example.com')
+        expected_messages = {
+          is_valid?: true,
+          attributes: {
+            'username' => user, 'email' => 'jane@example.com'
+          }
+        }
+        allow(saml_response).to receive_messages(expected_messages)
       end
 
       it 'sets authed if saml response and csrf are both valid' do
         post '/consume', params, rack_env
-        expect(last_request.session[:authed]).to eq(true)
+        expect(last_request.session[:authed]).to be(true)
       end
 
       it 'extracts attributes using mappings' do
         post '/consume', params, rack_env
         mappings = last_request.session[:mappings]
-        expect(mappings).to eq('Saml-User' => 'Jane Doe')
+        expect(mappings).to eq('Saml-User' => user)
       end
 
       it 'redirects if saml response and csrf are both valid' do
