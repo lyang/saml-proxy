@@ -85,8 +85,9 @@ GEM
       unicode-display_width (>= 2.4.0, < 4.0)
     rubocop-ast (1.38.0)
       parser (>= 3.3.1.0)
-    rubocop-rspec (3.4.0)
-      rubocop (~> 1.61)
+    rubocop-rspec (3.5.0)
+      lint_roller (~> 1.1)
+      rubocop (~> 1.72, >= 1.72.1)
     ruby-progressbar (1.13.0)
     ruby-saml (1.17.0)
       nokogiri (>= 1.13.10)
@@ -134,7 +135,7 @@ DEPENDENCIES
   rspec (~> 3.13)
   rspec_junit_formatter
   rubocop (~> 1.72.2)
-  rubocop-rspec (~> 3.4)
+  rubocop-rspec (~> 3.5)
   ruby-saml (~> 1.17)
   simplecov (~> 0.22.0)
   simplecov-cobertura
