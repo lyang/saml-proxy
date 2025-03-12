@@ -89,7 +89,7 @@ GEM
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
     ruby-progressbar (1.13.0)
-    ruby-saml (1.17.0)
+    ruby-saml (1.18.0)
       nokogiri (>= 1.13.10)
       rexml
     ruby2_keywords (0.0.5)
@@ -136,7 +136,7 @@ DEPENDENCIES
   rspec_junit_formatter
   rubocop (~> 1.73.2)
   rubocop-rspec (~> 3.5)
-  ruby-saml (~> 1.17)
+  ruby-saml (~> 1.18)
   simplecov (~> 0.22.0)
   simplecov-cobertura
   sinatra (~> 4.1)
