@@ -84,7 +84,9 @@ class SamlProxy < Sinatra::Base
     session[:authed] = true
     session[:mappings] = {}
     settings.mappings.each do |attr, header|
-      session[:mappings][header] = saml_response.attributes[attr]
+      session[:mappings][header] = attr == settings.groups[:attribute] ?
+        saml_response.attributes.multi(attr).map{|group_id| settings.groups[:mappings][group_id]} :
+        saml_response.attributes[attr]
     end
   end
 end
