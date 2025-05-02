@@ -72,7 +72,12 @@ class SamlProxy < Sinatra::Base
   private
 
   def saml_settings
-    self.class.saml_settings ||= load_saml_settings
+    temp = self.class.saml_settings ||= load_saml_settings
+    assertion_url = settings.saml[:assertion_consumer_service_url]
+    if assertion_url.include?("%HOST%")
+      temp.assertion_consumer_service_url = assertion_url.clone.sub! '%HOST%', request.env["HTTP_HOST"]
+    end
+    temp
   end
 
   def valid?(saml_response)
