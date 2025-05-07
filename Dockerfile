@@ -28,7 +28,7 @@ COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build "${APP_ROOT}" "${APP_ROOT}"
 COPY helpers ./helpers
 COPY config ./config
-COPY config.ru saml_proxy.rb LICENSE "$APP_ROOT"
+COPY config.ru saml_proxy.rb LICENSE "$APP_ROOT/"
 RUN addgroup --system --gid 1000 samlproxy && \
     adduser --system --uid 1000 samlproxy --ingroup samlproxy && \
     chown -R samlproxy:samlproxy "$APP_ROOT"

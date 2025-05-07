@@ -22,4 +22,7 @@ saml:
     private_key: '<%= File.read(ENV['SAML_PRIVATE_KEY']) if ENV.key?('SAML_PRIVATE_KEY') %>'
     security:
       authn_requests_signed: <%= !!ENV['SAML_AUTHN_REQUESTS_SIGNED'] %>
+      logout_requests_signed: <%= !!ENV['SAML_AUTHN_REQUESTS_SIGNED'] %>
       metadata_signed: <%= !!ENV['SAML_METADATA_SIGNED'] %>
+      digest_method: http://www.w3.org/2001/04/xmlenc#sha256
+      signature_method: http://www.w3.org/2001/04/xmldsig-more#rsa-sha256
