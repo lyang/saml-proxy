@@ -73,9 +73,6 @@ class SamlProxy < Sinatra::Base
   get '/logout' do
     if session[:authed] && session[:host] == request.env["HTTP_HOST"]
       settings = saml_settings
-      if settings.name_identifier_value.nil?
-        settings.name_identifier_value = session[:mappings]["SAML_USERNAME"]
-      end
       session[:userid] = nil
       session[:authed] = nil
       session[:mappings] = nil
@@ -94,6 +91,9 @@ class SamlProxy < Sinatra::Base
       temp.assertion_consumer_service_url = assertion_url.clone.sub! '%HOST%', request.env["HTTP_HOST"]
     end
     temp.sessionindex = session[:samlindex]
+    unless session[:mappings].nil?
+        temp.name_identifier_value = session[:mappings]["SAML_USERNAME"]
+    end
     temp
   end
 
