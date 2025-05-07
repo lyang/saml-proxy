@@ -34,7 +34,7 @@ class SamlProxy < Sinatra::Base
   end
 
   get '/auth' do
-    if session[:authed]
+    if session[:authed] && session[:host] == request.env["HTTP_HOST"]
       [200, session[:mappings], '']
     else
       401
@@ -45,6 +45,7 @@ class SamlProxy < Sinatra::Base
     session.clear
     session[:csrf] = SecureRandom.hex(64)
     session[:redirect] = params[:redirect]
+    session[:host] = request.env["HTTP_HOST"]
     redirect OneLogin::RubySaml::Authrequest.new.create(
       saml_settings,
       RelayState: session[:csrf]
@@ -69,6 +70,21 @@ class SamlProxy < Sinatra::Base
     200
   end
 
+  get '/logout' do
+    if session[:authed] && session[:host] == request.env["HTTP_HOST"]
+      settings = saml_settings
+      if settings.name_identifier_value.nil?
+        settings.name_identifier_value = session[:mappings]["SAML_USERNAME"]
+      end
+      session[:userid] = nil
+      session[:authed] = nil
+      session[:mappings] = nil
+      logout_request = OneLogin::RubySaml::Logoutrequest.new
+      relayState = session[:csrf]
+      redirect logout_request.create(settings, :RelayState => relayState)
+    end
+  end
+
   private
 
   def saml_settings
@@ -77,6 +93,7 @@ class SamlProxy < Sinatra::Base
     if assertion_url.include?("%HOST%")
       temp.assertion_consumer_service_url = assertion_url.clone.sub! '%HOST%', request.env["HTTP_HOST"]
     end
+    temp.sessionindex = session[:samlindex]
     temp
   end
 
@@ -91,5 +108,6 @@ class SamlProxy < Sinatra::Base
     settings.mappings.each do |attr, header|
       session[:mappings][header] = saml_response.attributes[attr]
     end
+    session[:samlindex] = saml_response.sessionindex
   end
 end
