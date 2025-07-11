@@ -30,7 +30,7 @@ class SamlProxy < Sinatra::Base
     register Sinatra::ConfigFile
     config_file 'config/*.erb'
 
-    use Rack::Session::Cookie, settings.cookie.deep_symbolize_keys.compact unless test?
+    use Rack::Session::Pool unless test?
   end
 
   get '/auth' do
@@ -106,7 +106,7 @@ class SamlProxy < Sinatra::Base
     session[:authed] = true
     session[:mappings] = {}
     settings.mappings.each do |attr, header|
-      session[:mappings][header] = saml_response.attributes[attr]
+      session[:mappings][header] = saml_response.attributes.multi(attr).join(" ")
     end
     session[:samlindex] = saml_response.sessionindex
   end
