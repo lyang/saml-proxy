@@ -10,6 +10,7 @@ mappings:
   <% end %>
 
 groups:
+  priority: '<%= ENV['SAML_GROUP_PRIORITY'] %>'
   attribute: '<%= ENV['SAML_GROUP_ATTRIBUTE'] %>'
   mappings:
   <% ENV.each do |key, value| %>

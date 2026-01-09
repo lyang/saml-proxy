@@ -76,17 +76,50 @@ class SamlProxy < Sinatra::Base
   end
 
   def valid?(saml_response)
-    saml_response.is_valid? &&
-      Rack::Utils.secure_compare(session[:csrf], params[:RelayState])
+    csrf = session[:csrf]
+    relay = params[:RelayState]
+
+    return false if csrf.nil? || relay.nil?
+
+    saml_response.is_valid? && Rack::Utils.secure_compare(csrf, relay)
+  end
+
+  def parse_priority(value)
+    case value
+    when Array
+      value.map(&:to_s)
+    when String
+      # Accept comma, pipe, or whitespace separated lists
+      value.split(/[,\|\s]+/)
+    else
+      []
+    end.map(&:strip).reject(&:empty?)
   end
 
   def update_session(saml_response)
     session[:authed] = true
     session[:mappings] = {}
+
+    # Configurable priority order (array of role names)
+    role_priority = parse_priority(settings.groups[:priority])
+
     settings.mappings.each do |attr, header|
-      session[:mappings][header] = attr == settings.groups[:attribute] ?
-        saml_response.attributes.multi(attr).map{|group_id| settings.groups[:mappings][group_id]} :
-        saml_response.attributes[attr]
+      if attr == settings.groups[:attribute]
+        roles = saml_response.attributes
+                             .multi(attr)
+                             .map { |group_id| settings.groups[:mappings][group_id] }
+                             .compact
+                             .map(&:to_s)
+                             .map(&:strip)
+                             .reject(&:empty?)
+                             .uniq
+
+        selected = role_priority.find { |r| roles.include?(r) } || roles.first
+        halt 401 unless selected
+        session[:mappings][header] = selected.to_s
+      else
+        session[:mappings][header] = saml_response.attributes[attr]
+      end
     end
   end
 end
