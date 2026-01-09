@@ -10,3 +10,8 @@ Dockerfile
 README.md
 deploy.sh
 spec
+.bundle/
+vendor/bundle/
+*.gem
+# Ignore your local lockfile so the container generates its own if needed
+Gemfile.lock
