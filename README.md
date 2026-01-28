@@ -1,4 +1,4 @@
-# saml-proxy [![Build](https://github.com/lyang/saml-proxy/actions/workflows/build.yml/badge.svg)](https://github.com/lyang/saml-proxy/actions/workflows/build.yml) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) [![Maintainability](https://api.codeclimate.com/v1/badges/58cdb58ef538f551da7a/maintainability)](https://codeclimate.com/github/lyang/saml-proxy/maintainability) [![codecov](https://codecov.io/gh/lyang/saml-proxy/branch/main/graph/badge.svg?token=2PY9RCMC53)](https://codecov.io/gh/lyang/saml-proxy)
+# saml-proxy [![Build](https://github.com/lyang/saml-proxy/actions/workflows/build.yml/badge.svg)](https://github.com/lyang/saml-proxy/actions/workflows/build.yml) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=lyang_saml-proxy&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=lyang_saml-proxy) [![codecov](https://codecov.io/gh/lyang/saml-proxy/branch/main/graph/badge.svg?token=2PY9RCMC53)](https://codecov.io/gh/lyang/saml-proxy)
 A simple saml proxy for SSO integration
 
 ## What is SAML
