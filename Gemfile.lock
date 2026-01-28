@@ -87,9 +87,9 @@ GEM
     rubocop-ast (1.49.0)
       parser (>= 3.3.7.2)
       prism (~> 1.7)
-    rubocop-rspec (3.6.0)
+    rubocop-rspec (3.9.0)
       lint_roller (~> 1.1)
-      rubocop (~> 1.72, >= 1.72.1)
+      rubocop (~> 1.81)
     ruby-progressbar (1.13.0)
     ruby-saml (1.18.1)
       nokogiri (>= 1.13.10)
@@ -137,7 +137,7 @@ DEPENDENCIES
   rspec (~> 3.13)
   rspec_junit_formatter
   rubocop (~> 1.84.0)
-  rubocop-rspec (~> 3.6)
+  rubocop-rspec (~> 3.9)
   ruby-saml (~> 1.18)
   simplecov (~> 0.22.0)
   simplecov-cobertura
