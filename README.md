@@ -1,3 +1,4 @@
+[![Hypercommit](https://img.shields.io/badge/Hypercommit-DB2475)](https://hypercommit.com/saml-proxy)
 # saml-proxy [![Build](https://github.com/lyang/saml-proxy/actions/workflows/build.yml/badge.svg)](https://github.com/lyang/saml-proxy/actions/workflows/build.yml) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=lyang_saml-proxy&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=lyang_saml-proxy) [![codecov](https://codecov.io/gh/lyang/saml-proxy/branch/main/graph/badge.svg?token=2PY9RCMC53)](https://codecov.io/gh/lyang/saml-proxy)
 A simple saml proxy for SSO integration
 
