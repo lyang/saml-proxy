@@ -13,7 +13,6 @@ GEM
       bigdecimal
       rexml
     diff-lcs (1.6.2)
-    docile (1.4.1)
     hashdiff (1.2.1)
     iniparse (1.5.0)
     io-console (0.8.2)
@@ -116,15 +115,10 @@ GEM
       nokogiri (>= 1.13.10)
       rexml
     ruby2_keywords (0.0.5)
-    simplecov (0.22.0)
-      docile (~> 1.1)
-      simplecov-html (~> 0.11)
-      simplecov_json_formatter (~> 0.1)
-    simplecov-cobertura (3.2.0)
+    simplecov (1.0.3)
+    simplecov-cobertura (4.0.0)
       rexml
-      simplecov (~> 0.19)
-    simplecov-html (0.13.2)
-    simplecov_json_formatter (0.1.4)
+      simplecov (~> 1.0)
     sinatra (4.2.1)
       logger (>= 1.6.0)
       mustermann (~> 3.0)
@@ -168,7 +162,7 @@ DEPENDENCIES
   rubocop (~> 1.88.2)
   rubocop-rspec (~> 3.10)
   ruby-saml (~> 1.18)
-  simplecov (~> 0.22.0)
+  simplecov (~> 1.0.3)
   simplecov-cobertura
   sinatra (~> 4.2)
   sinatra-contrib (~> 4.1)
