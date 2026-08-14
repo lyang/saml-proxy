@@ -115,7 +115,7 @@ GEM
       nokogiri (>= 1.13.10)
       rexml
     ruby2_keywords (0.0.5)
-    simplecov (1.0.3)
+    simplecov (1.1.0)
     simplecov-cobertura (4.0.0)
       rexml
       simplecov (~> 1.0)
@@ -162,7 +162,7 @@ DEPENDENCIES
   rubocop (~> 1.89.0)
   rubocop-rspec (~> 3.10)
   ruby-saml (~> 1.18)
-  simplecov (~> 1.0.3)
+  simplecov (~> 1.1.0)
   simplecov-cobertura
   sinatra (~> 4.2)
   sinatra-contrib (~> 4.1)
