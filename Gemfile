@@ -17,7 +17,7 @@ group :test do
   gem "rspec_junit_formatter", require: false
   gem 'rack-test', '~> 2.2'
   gem 'rspec', '~> 3.13', group: :test
-  gem 'simplecov', '~> 1.0.3'
+  gem 'simplecov', '~> 1.1.1'
   gem 'simplecov-cobertura'
   gem 'webmock', '~> 3.26'
 end
