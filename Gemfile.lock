@@ -136,7 +136,7 @@ GEM
     unicode-display_width (3.3.0)
       unicode-emoji (~> 4.3)
     unicode-emoji (4.3.0)
-    webmock (3.30.0)
+    webmock (3.34.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
@@ -166,7 +166,7 @@ DEPENDENCIES
   simplecov-cobertura
   sinatra (~> 4.2)
   sinatra-contrib (~> 4.1)
-  webmock (~> 3.30)
+  webmock (~> 3.34)
 
 BUNDLED WITH
    2.6.3
