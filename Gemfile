@@ -22,4 +22,4 @@ group :test do
   gem 'webmock', '~> 3.34'
 end
 
-gem 'pry', '~> 0.16.0', group: %i[development test]
+gem 'pry', '~> 0.16.1', group: %i[development test]
